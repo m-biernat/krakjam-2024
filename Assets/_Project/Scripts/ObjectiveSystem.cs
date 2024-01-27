@@ -43,6 +43,8 @@ namespace KrakJam24
 
             Mood += 1;
 
+            CurrentObjective.Deactivate();
+            
             if (!_isPunishment)
                 RemoveCurrentTask();
 
@@ -60,6 +62,8 @@ namespace KrakJam24
             if (Mood > 0)
             {
                 Mood = 0;
+
+                CurrentObjective.Deactivate();
 
                 if (!_isPunishment)
                     RemoveCurrentTask();
