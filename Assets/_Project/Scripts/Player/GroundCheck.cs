@@ -11,6 +11,11 @@ namespace KrakJam24
             IsGrounded = true;
         }
 
+        void OnTriggerStay(Collider other)
+        {
+            IsGrounded = true;
+        }
+
         void OnTriggerExit(Collider other)
         {
             IsGrounded = false;

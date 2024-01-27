@@ -10,12 +10,18 @@ namespace KrakJam24
 
         [SerializeField] float _mouseSensitivity = 10;
 
-        Vector2 _rotation;
+        Vector2 _rotation = Vector2.zero;
 
         [SerializeField] float _clampAngleTop = 90;
         [SerializeField] float _clampAngleDown = 90;
 
-        private void Start()
+        void Awake()
+        {
+            _rotation.x = _head.localRotation.eulerAngles.x;
+            _rotation.y = transform.rotation.eulerAngles.y;
+        }
+
+        void Start()
         {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
