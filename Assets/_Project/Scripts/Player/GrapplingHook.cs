@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using DG.Tweening;
 
 namespace KrakJam24
 {
@@ -10,15 +11,18 @@ namespace KrakJam24
 
         [SerializeField] Transform _head;
 
-        [SerializeField] Transform _leftHand;
-        [SerializeField] Transform _rightHand;
+        [SerializeField] Transform _leftHook;
+        [SerializeField] Transform _rightHook;
 
         [SerializeField] float _range = 10;
+        [SerializeField] LayerMask _layerMask;
 
         [SerializeField] float _force = 10;
         [SerializeField] float _upForceMultiplier = 0.5f;
 
         bool _isActive = false;
+
+        [SerializeField] float _animationDuration = 0.2f;
 
         void Awake()
         {
@@ -46,14 +50,19 @@ namespace KrakJam24
         void TryShootingHook(Action<RaycastHit> onTargetHit)
         {
             RaycastHit hit;
-            if (Physics.Raycast(_head.position, _head.forward, out hit, _range))
+            if (Physics.Raycast(_head.position, _head.forward, out hit, _range, _layerMask))
+            {
+                _isActive = true;
                 onTargetHit(hit);
+            }
         }
 
         void PullMeToSth(RaycastHit hit)
         {
             var dir = (transform.up * _upForceMultiplier) + (hit.point - transform.position);
             _rb.AddForce(dir.normalized * _force, ForceMode.Impulse);
+
+            AnimateHook(_leftHook, hit);
         }
 
         void PullSthToMe(RaycastHit hit)
@@ -61,6 +70,14 @@ namespace KrakJam24
             IHookable hookable;
             if (hit.collider.TryGetComponent(out hookable))
                 hookable.OnHookPull(transform, _force, _upForceMultiplier);
+
+            AnimateHook(_rightHook, hit);
+        }
+
+        void AnimateHook(Transform hook, RaycastHit hit)
+        {
+            hook.DOPunchPosition(transform.InverseTransformPoint(hit.point), _animationDuration)
+                .OnComplete(() => _isActive = false);
         }
     }
 }
