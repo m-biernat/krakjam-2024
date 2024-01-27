@@ -32,7 +32,7 @@ namespace KrakJam24
                 }
                 else
                 {
-                    _objectiveSystem.SwapObjective();
+                    _objectiveSystem.ClearObjective();
                     Destroy(other.gameObject); 
                 }
 

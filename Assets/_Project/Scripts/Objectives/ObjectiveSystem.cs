@@ -44,7 +44,7 @@ namespace KrakJam24
 
             Mood += 1;
 
-            CurrentObjective.Deactivate();
+            CurrentObjective?.Deactivate();
             
             if (!_isPunishment)
                 RemoveCurrentTask();
@@ -64,7 +64,7 @@ namespace KrakJam24
             {
                 Mood = 0;
 
-                CurrentObjective.Deactivate();
+                CurrentObjective?.Deactivate();
 
                 if (!_isPunishment)
                     RemoveCurrentTask();
@@ -119,9 +119,11 @@ namespace KrakJam24
             CurrentObjective = target;
         }
 
-        public void SwapObjective()
+        public void ClearObjective()
         {
-            SwapObjective(_punishments[0]);
+            CurrentObjective = null;
+            _isPunishment = true;
+            Timer.Stop();
         }
     }
 }
