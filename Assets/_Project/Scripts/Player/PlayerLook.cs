@@ -15,6 +15,12 @@ namespace KrakJam24
         [SerializeField] float _clampAngleTop = 90;
         [SerializeField] float _clampAngleDown = 90;
 
+        private void Start()
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+
         void Update()
         {
             HandleMouseInput();
