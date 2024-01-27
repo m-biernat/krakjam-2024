@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace KrakJam24
 {
+    [RequireComponent(typeof(Timer))]
     public class ObjectiveSystem : MonoBehaviour
     {
         [SerializeField] List<Objective> _tasks;
@@ -112,5 +113,15 @@ namespace KrakJam24
         }
 
         void OnTimesUp() => FailTask();
+
+        public void SwapObjective(Objective target)
+        {
+            CurrentObjective = target;
+        }
+
+        public void SwapObjective()
+        {
+            SwapObjective(_punishments[0]);
+        }
     }
 }
