@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using DG.Tweening;
 
 namespace KrakJam24
 {
@@ -25,7 +26,11 @@ namespace KrakJam24
             _text.text = $"{time}";
             _text.enabled = true;
         }
-        private void OnTick(int time) => _text.text = $"{time}";
+        private void OnTick(int time)
+        {
+            _text.text = $"{time}";
+            _text.rectTransform.DOPunchScale(Vector3.one * .25f, .1f);
+        }
         private void OnEnd() => _text.enabled = false;
 
         private void OnDisable()
