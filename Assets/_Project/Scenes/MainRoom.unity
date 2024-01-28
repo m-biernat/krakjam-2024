@@ -2251,7 +2251,7 @@ MonoBehaviour:
   spriteRenderer: {fileID: 448368322}
   happyGfx: {fileID: 21300000, guid: ee0e6b04f1f89a241a367960172a3923, type: 3}
   sadGfx: {fileID: 21300000, guid: ed157bb754fb3894e9895aad7b1f6afe, type: 3}
-  useObjectiveImage: 0
+  useObjectiveImage: 1
 --- !u!4 &205335411 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 60ea58dad12636b44b8e195c5374a62b,
