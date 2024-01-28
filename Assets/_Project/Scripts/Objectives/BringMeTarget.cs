@@ -41,5 +41,20 @@ namespace KrakJam24
 
             gameObject.SetActive(false);
         }
+
+        private void OnEnable()
+        {
+            Timer.OnTimesUp += OnTimesUp;
+        }
+
+        private void OnDisable()
+        {
+            Timer.OnTimesUp -= OnTimesUp;
+        }
+
+        public void OnTimesUp()
+        {
+            gameObject.SetActive(false);
+        }
     }
 }
