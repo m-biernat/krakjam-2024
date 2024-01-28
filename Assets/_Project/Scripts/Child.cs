@@ -68,7 +68,7 @@ namespace KrakJam24
 
         void OnStartTask()
         {
-            if (useObjectiveImage)
+            if (!useObjectiveImage)
                 dialog.SetActive(false);
         }
 

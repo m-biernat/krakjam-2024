@@ -1,13 +1,14 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace KrakJam24
 {
-    public class QuitGame : MonoBehaviour
+    public class RestartGame : MonoBehaviour
     {
         void Update()
         {
             if (Input.GetKeyDown(KeyCode.Escape))
-                Application.Quit();
+                SceneManager.LoadScene(0, LoadSceneMode.Single);
         }
     }
 }
