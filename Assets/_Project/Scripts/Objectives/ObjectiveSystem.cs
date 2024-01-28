@@ -51,12 +51,14 @@ namespace KrakJam24
             Timer.Stop();
 
             Mood += 1;
-            CompletedTasks += 1;
 
             CurrentObjective?.Deactivate();
             
             if (!_isPunishment)
+            {
+                CompletedTasks += 1;
                 RemoveCurrentTask();
+            }
 
             OnTaskCompleted?.Invoke();
 
