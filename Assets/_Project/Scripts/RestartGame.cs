@@ -8,7 +8,14 @@ namespace KrakJam24
         void Update()
         {
             if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                Application.Quit();
+            }
+
+            if (Input.GetKeyDown(KeyCode.Tab))
+            {
                 SceneManager.LoadScene(0, LoadSceneMode.Single);
+            }
         }
     }
 }
