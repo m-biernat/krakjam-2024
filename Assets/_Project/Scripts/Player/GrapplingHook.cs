@@ -24,9 +24,12 @@ namespace KrakJam24
 
         [SerializeField] float _animationDuration = 0.2f;
 
+        AudioSource _audioSrc;
+
         void Awake()
         {
             _rb = GetComponent<Rigidbody>();
+            _audioSrc = GetComponent<AudioSource>();
         }
 
         void Update()
@@ -78,6 +81,9 @@ namespace KrakJam24
         {
             hook.DOPunchPosition(transform.InverseTransformPoint(hit.point), _animationDuration)
                 .OnComplete(() => _isActive = false);
+
+            _audioSrc.pitch = UnityEngine.Random.Range(0.8f, 1.2f);
+            _audioSrc.Play();
         }
     }
 }
