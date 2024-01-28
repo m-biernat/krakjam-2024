@@ -11,6 +11,8 @@ namespace KrakJam24
 
         public static int Mood { get; private set; }
 
+        public static int CompletedTasks { get; private set; }
+
         public Objective CurrentObjective { get; private set; }
         bool _isPunishment;
 
@@ -20,9 +22,15 @@ namespace KrakJam24
         [SerializeField] float _fetchObjectiveDelay = 3;
         [SerializeField] float _startObjectiveDelay = 3;
 
+        public static event System.Action<Objective> OnNewObjective;
+        public static event System.Action OnStartObjective;
+        public static event System.Action OnTaskCompleted;
+        public static event System.Action OnTaskFailed;
+
         void Awake()
         {
             Mood = 1;
+            CompletedTasks = 0;
             Timer = GetComponent<Timer>();
         }
 
@@ -43,15 +51,21 @@ namespace KrakJam24
             Timer.Stop();
 
             Mood += 1;
+            CompletedTasks += 1;
 
             CurrentObjective?.Deactivate();
             
             if (!_isPunishment)
                 RemoveCurrentTask();
 
+            OnTaskCompleted?.Invoke();
+
             if (_tasks.Count == 0)
             {
-                Debug.Log("Wygra³eœ gre");
+                if (Mood == 1)
+                    GameManager.Instance.EndGame(false);
+                else
+                    GameManager.Instance.EndGame(true);
                 return;
             }
 
@@ -68,10 +82,12 @@ namespace KrakJam24
 
                 if (!_isPunishment)
                     RemoveCurrentTask();
+
+                OnTaskFailed?.Invoke();
             }
             else
             {
-                Debug.Log("Koniec");
+                GameManager.Instance.EndGame(false);
                 return;
             }
 
@@ -96,11 +112,15 @@ namespace KrakJam24
             else
                 SetNextPunishment();
 
-            Debug.Log(CurrentObjective.description);
+            OnNewObjective?.Invoke(CurrentObjective);
             Invoke(nameof(StartObjective), _startObjectiveDelay);
         }
 
-        void StartObjective() => CurrentObjective.Activate(this);
+        void StartObjective()
+        {
+            CurrentObjective.Activate(this);
+            OnStartObjective?.Invoke();
+        }
 
         void OnEnable()
         {
@@ -112,7 +132,11 @@ namespace KrakJam24
             Timer.OnTimesUp -= OnTimesUp;
         }
 
-        void OnTimesUp() => FailTask();
+        void OnTimesUp()
+        {
+            ClearObjective();
+            FailTask();
+        }
 
         public void SwapObjective(Objective target)
         {

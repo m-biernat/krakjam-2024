@@ -37,7 +37,7 @@ namespace KrakJam24
         private void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag("Player"))
-                Debug.Log("Kill em");
+                GameManager.Instance.EndGame(false);
         }
     }
 }
